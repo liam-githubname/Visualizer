@@ -1,3 +1,2 @@
-This is a data structure visualizer written in C using the SDL2 library.
+Web-App for data structure and algorithm visualization.
 Written by Liam Harvell.
-The goal is to have a self-contained application.
