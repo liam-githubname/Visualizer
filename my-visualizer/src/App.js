@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from 'react';
+import Visualizer from './components/Visualizer';
+import ControlPanel from './components/ControlPanel';
 
 function App() {
+  const [currentVisualization, setCurrentVisualization] = useState('sorting');
+  const [isRunning, setIsRunning] = useState(false);
+
+  const handleAlgorithmSelect = (algorithm) => {
+    setCurrentVisualization(algorithm);
+  };
+
+  const handleStart = () => {
+    setIsRunning(true);
+  };
+
+  const handleReset = () => {
+    setIsRunning(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <ControlPanel
+        onAlgorithmSelect={handleAlgorithmSelect}
+        onStart={handleStart}
+        onReset={handleReset}
+      />
+      <Visualizer currentVisualization={currentVisualization} isRunning={isRunning} />
     </div>
   );
 }
 
 export default App;
+
