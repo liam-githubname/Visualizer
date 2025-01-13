@@ -1,131 +1,171 @@
-import React, { useState } from "react";
-import Sketch from "react-p5";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from 'react';
 
-interface VisualizerProps {
+interface VisualizerProperties {
+
   title: string;
-  initialData: number[];
-  generateVisualizationData: (data: number[]) => any[];
-  steps: string[];
-  drawVisualization: (p5: p5, data: any) => void;
-  codeLines: string[];
+  userInputData: string;
+  P5Sketch: (divId: string, data: number[]) => void;
+  array: number[];
+
 }
 
+const Visualizer: React.FC<VisualizerProperties> = ({
 
-const Visualizer: React.FC<VisualizerProps> = ({
   title,
-  initialData,
-  generateVisualizationData,
-  steps,
-  drawVisualization,
-  codeLines,
+  P5Sketch,
+
 }) => {
-  const [inputData, setInputData] = useState(initialData || []);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [visualizationData, setVisualizationData] = useState([]);
-  const [running, setRunning] = useState(false);
 
-  // Handle user input
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    try {
-      const parsedData = JSON.parse(value);
-      setInputData(parsedData);
-    } catch {
-      console.error("Invalid input data. Ensure it is a valid JSON array.");
-    }
-  };
+  let data = [100,99,98,97,96];
 
-  // Generate visualization data based on user input
-  const handleGenerate = () => {
-    const data = generateVisualizationData(inputData);
-    setVisualizationData(data);
-    setCurrentStep(0);
-    setRunning(false);
-  };
+  const [userInputData, setUserInputData] = useState("");
+  const [currentShownData, setCurrentShownData] = useState("");
 
-  // Start the visualization
-  const handleStart = () => {
-    if (visualizationData.length > 0) {
-      setRunning(true);
-    }
-  };
 
-  // Move to the next step
-  const handleNextStep = () => {
-    if (currentStep < visualizationData.length - 1) {
-      setCurrentStep((prev) => prev + 1);
-    } else {
-      setRunning(false); // Stop when done
-    }
-  };
+  const handleCurrentShownDataChange = (userInput: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentShownData(userInput.target.value);
+  }
 
-  // Render p5.js visualization
-  const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(800, 400).parent(canvasParentRef);
-  };
+  const handleUserInputDataChange = () => {
+    setUserInputData(currentShownData);
+  }
 
-  const draw = (p5) => {
-    p5.background(220);
-    if (visualizationData.length > 0) {
-      drawVisualization(p5, visualizationData[currentStep]);
-    }
-    if (running) {
-      handleNextStep();
-    }
-  };
 
-  return (
-    <div style={{ margin: "20px", padding: "20px", border: "1px solid #ccc" }}>
-      {/* Title Section */}
-      <h2>{title}</h2>
+  const generateRandomData = () => {
 
-      {/* User Input Section */}
-      <div style={{ marginBottom: "10px" }}>
-        <label>
-          Input Data (JSON):
-          <input
-            type="text"
-            value={JSON.stringify(inputData)}
-            onChange={handleInputChange}
-            style={{ width: "100%", marginTop: "5px" }}
-          />
-        </label>
-        <button onClick={handleGenerate}>Generate Visualization</button>
-        <button onClick={handleStart}>Start Visualization</button>
+    const array: number[] = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100));
+
+    // setCurrentShownData(array.toString);
+    data = array;
+    console.log(data);
+
+    parseUserInputData();
+  }
+
+  //TODO: turn string into number array then set the data variable
+  const parseUserInputData = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const tmp = userInputData;
+  }
+
+  function Animation() {
+    return (
+      <>
+        {P5Sketch("displayWindow", data)}
+      </>
+    )
+  }
+
+  function WindowContainer() {
+    return (
+      <>
+
+      </>
+    )
+  }
+
+
+return (
+  <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+    {/* Title */}
+    <h1 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>{title}</h1>
+    {/* Visualization and Code Window Container */}
+    <div
+      id="windowContainer"
+      style={{
+        display: "flex",
+        flexWrap: "wrap", // Enables wrapping for smaller screens
+        gap: "20px",
+        justifyContent: "space-between",
+        marginBottom: "20px",
+      }}
+    >
+      {/* Display Window */}
+      <div
+        id="displayWindow"
+        style={{
+          flex: "1 1 60%", // Default width of 60%, but can shrink or grow
+          minWidth: "300px", // Minimum width for responsive design
+          height: "400px",
+          border: "1px solid #000",
+          background: "#FFF",
+          overflow: "hidden",
+        }}
+      >
+        {P5Sketch("displayWindow", data)}
       </div>
 
-      {/* Visualization Area */}
-      <div style={{ border: "1px solid #000", marginBottom: "10px" }}>
-        <Sketch setup={setup} draw={draw} />
-      </div>
-
-      {/* Steps Explanation */}
-      <div style={{ marginBottom: "10px" }}>
-        <h3>Steps:</h3>
-        <p>{steps[currentStep]}</p>
-      </div>
-
-      {/* Code Step-Through */}
-      <div>
-        <h3>Code:</h3>
-        <pre>
-          <code>
-            {codeLines.map((line, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: index === currentStep ? "#d3d3d3" : "transparent",
-                }}
-              >
-                {line}
-              </div>
-            ))}
-          </code>
+      {/* Code Window */}
+      <div
+        id="codeWindow"
+        style={{
+          flex: "1 1 100%", // Full width when wrapping
+          minWidth: "300px",
+          height: "400px",
+          border: "1px solid #000",
+          background: "#F8F8F8",
+          overflow: "auto",
+          padding: "10px",
+        }}
+      >
+        {/* Replace this with dynamic code rendering */}
+        <pre style={{ fontSize: "0.9rem", lineHeight: "1.4" }}>
+          {`// Code for visualization\nlet array = [1, 2, 3];`}
         </pre>
       </div>
     </div>
-  );
-}
+
+    {/* Input Section */}
+    <div style={{ marginBottom: "20px" }}>
+      <input
+        type="text"
+        id="textInput"
+        placeholder="Type a set of numbers..."
+        value={currentShownData}
+        onChange={handleCurrentShownDataChange}
+        style={{
+          padding: "10px",
+          border: "1px solid #CCC",
+          borderRadius: "4px",
+          width: "70%",
+          marginBottom: "10px",
+        }}
+      />
+      <br />
+      <button
+        onClick={handleUserInputDataChange}
+        style={{
+          padding: "10px 20px",
+          margin: "5px",
+          backgroundColor: "#007BFF",
+          color: "#FFF",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+      >
+        Update
+      </button>
+      <button
+        onClick={generateRandomData}
+        style={{
+          padding: "10px 20px",
+          margin: "5px",
+          backgroundColor: "#28A745",
+          color: "#FFF",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+      >
+        Generate Random Array
+      </button>
+    </div>
+  </div>
+);
+
+};
 
 export default Visualizer;
 
