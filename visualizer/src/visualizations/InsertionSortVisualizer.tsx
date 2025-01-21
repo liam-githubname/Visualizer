@@ -1,26 +1,20 @@
 import Visualizer from "../components/Visualizer";
 import Sketch from "react-p5";
 
-function BubbleSortVisualizer() {
-
+function InsertionSortVisualizer() {
   function P5Sketch(divId: string, array: number[]) {
 
-    let i = 0;
-    let j = 0;
+    let i = 1;
     let sorted = false;
 
     const setup = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts"), canvasParentRef: Element) => {
-
       const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
       const displayHeight = document.getElementById(divId)?.offsetHeight || 1;
-
       p5.createCanvas(displayWidth, displayHeight).parent(canvasParentRef);
     }
 
-
-    //FIXME: Use a set of sketches instead, to get around memory complexity problem I can save only the unsorted state of the array, instead of the whole array. (check if that reduces memory complexity to 2n instead of n^2)
     const draw = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts")) => {
-      p5.frameRate(5);
+      p5.frameRate(1);
       const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
       const displayHeight = document.getElementById(divId)?.offsetHeight || 1;
       let tallestElement = 0;
@@ -37,18 +31,19 @@ function BubbleSortVisualizer() {
       p5.fill(10);
 
       if (!sorted) {
+
         if (i < array.length) {
-          if (j < array.length) {
-            if (array[j] > array[j + 1]) {
-              const temp = array[j];
-              array[j] = array[j + 1];
-              array[j + 1] = temp;
-            }
-            j++;
-          } else {
-            j = 0;
-            i++;
+
+          const key = array[i]
+          let j = i - 1
+
+          while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            j = j - 1
           }
+          array[j + 1] = key
+
+          i++
 
           for (let idx = 0; idx < array.length; idx++) {
             p5.fill(Math.floor(array[idx] / 255) * 100, array[idx] + 75, array[idx] + 75)
@@ -66,25 +61,27 @@ function BubbleSortVisualizer() {
     }
     return <Sketch setup={setup} draw={draw} />
   }
-  const bubbleSortCode = [
-    "for (let i = 0; i < arr.length - 1; i++) {",
-    "  for (let j = 0; j < arr.length - i - 1; j++) {",
-    "    if (arr[j] > arr[j + 1]) {",
-    "      [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];",
+
+  const insertionSortCode = [
+    "for (int i = 1; i < n; ++i) {",
+    "    int key = arr[i];",
+    "    int j = i - 1;",
+    "    while (j >= 0 && arr[j] > key) {",
+    "        arr[j + 1] = arr[j];",
+    "        j = j - 1;",
     "    }",
-    "  }",
-    "}",
+    "    arr[j + 1] = key;",
+    "}"
   ];
 
   return (
     <Visualizer
-      title="Bubble Sort Visualization"
+      title="Insertion Sort Visualization"
       userInputData=""
       P5Sketch={P5Sketch}
-      algorithmCode={bubbleSortCode}
+      algorithmCode={insertionSortCode}
     />
   );
-};
+}
 
-export default BubbleSortVisualizer;
-
+export default InsertionSortVisualizer
