@@ -1,7 +1,7 @@
-import BubbleSortVisualizer from "../visualizations/BubbleSortingVisualizer";
+import BubbleSortVisualizer from "../visualizations/BubbleSortVisualizer";
 
 function BubbleSortPage() {
-  return <BubbleSortVisualizer/>;
+  return <BubbleSortVisualizer />;
 }
 
 export default BubbleSortPage;

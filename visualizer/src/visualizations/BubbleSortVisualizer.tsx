@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import p5 from "p5";
+
 import Visualizer from "../components/Visualizer";
 import Sketch from "react-p5";
 
@@ -7,48 +6,38 @@ function BubbleSortVisualizer() {
 
   function P5Sketch(divId: string, array: number[]) {
 
-    //TODO: make it a ratio between the tallest and shortest elements so each bar of animation is relative to display size
-    // let tallestElement = 0;
     let i = 0;
     let j = 0;
     let sorted = false;
 
-    const setup = (p5: p5, canvasParentRef: any) => {
+    const setup = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts"), canvasParentRef: Element) => {
 
-      const displayWidth = document.getElementById(divId)?.offsetWidth;
-      const displayHeight = document.getElementById(divId)?.offsetHeight;
+      const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
+      const displayHeight = document.getElementById(divId)?.offsetHeight || 1;
 
-      p5.createCanvas(displayWidth, displayHeight, document.getElementById(divId)?.offsetWidth).parent(canvasParentRef);
-
-      //TODO: create the animation with scaling relative to the tallest element
-      // for (let i = 0; i < array.length; i++) {
-      //     tallestElement = (array[i].valueOf() > tallestElement) ? array.indexOf(i) : tallestElement;
-      // }
-
-      // console.log(tallestElement);
+      p5.createCanvas(displayWidth, displayHeight).parent(canvasParentRef);
     }
 
-    const draw = (p5: p5) => {
+
+    //FIXME: Use a set of sketches instead, to get around memory complexity problem I can save only the unsorted state of the array, instead of the whole array. (check if that reduces memory complexity to 2n instead of n^2)
+    const draw = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts")) => {
 
       p5.frameRate(5);
 
-      const displayWidth = document.getElementById(divId)?.offsetWidth;
-      const displayHeight = document.getElementById(divId)?.offsetHeight;
-
+      const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
+      const displayHeight = document.getElementById(divId)?.offsetHeight || 1;
       let tallestElement = 0;
       for (let i = 0; i < array.length; i++) {
         if (array[i] > tallestElement) {
           tallestElement = array[i];
         }
       }
-
       const barXValue = displayWidth / array.length;
       const barYValue = displayHeight / tallestElement;
 
-      p5.background(200);
 
+      p5.background(200);
       p5.fill(10);
-      //TODO: draw the array's current status, add feature to highlight the swapping elements
 
       if (!sorted) {
         if (i < array.length) {
@@ -64,11 +53,10 @@ function BubbleSortVisualizer() {
             i++;
           }
 
-          //FIXME: fix coloring for each element
           for (let idx = 0; idx < array.length; idx++) {
 
+            p5.fill(Math.floor(array[idx] / 255) * 100 + 10, array[idx], array[idx])
             p5.rect(barXValue * idx, displayHeight, barXValue, -barYValue * array[idx]);
-            p5.fill(array[idx] * 10);
 
           };
         } else {
@@ -77,8 +65,8 @@ function BubbleSortVisualizer() {
 
           for (let idx = 0; idx < array.length; idx++) {
 
+            p5.fill(Math.floor(array[idx] / 255) * 100, array[idx] + 75, array[idx] + 75)
             p5.rect(barXValue * idx, displayHeight, barXValue, -barYValue * array[idx]);
-            p5.fill(30 + idx * 20);
           }
 
           p5.noLoop();
@@ -89,7 +77,7 @@ function BubbleSortVisualizer() {
   }
 
 
-  const bubbleSortSteps = ["Step 1: Compare elements", "Step 2: Swap if necessary", "..."];
+  //const bubbleSortSteps = ["Step 1: Compare elements", "Step 2: Swap if necessary", "..."];
   const bubbleSortCode = [
     "for (let i = 0; i < arr.length - 1; i++) {",
     "  for (let j = 0; j < arr.length - i - 1; j++) {",
@@ -105,7 +93,6 @@ function BubbleSortVisualizer() {
       title="Bubble Sort Visualization"
       userInputData=""
       P5Sketch={P5Sketch}
-      array={[0]}
       algorithmCode={bubbleSortCode}
     />
   );

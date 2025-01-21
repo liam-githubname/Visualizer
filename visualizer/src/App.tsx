@@ -1,7 +1,6 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import BubbleSortVisualizer from "./visualizations/BubbleSortingVisualizer";
+import BubbleSortVisualizer from "./visualizations/BubbleSortVisualizer";
 
 function App() {
   return (
