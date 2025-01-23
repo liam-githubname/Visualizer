@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Visualizer from "../components/Visualizer";
 import Sketch from "react-p5";
 
@@ -7,13 +8,13 @@ function InsertionSortVisualizer() {
     let i = 1;
     let sorted = false;
 
-    const setup = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts"), canvasParentRef: Element) => {
+    const setup = (p5: any, canvasParentRef: Element) => {
       const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
       const displayHeight = document.getElementById(divId)?.offsetHeight || 1;
       p5.createCanvas(displayWidth, displayHeight).parent(canvasParentRef);
     }
 
-    const draw = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts")) => {
+    const draw = (p5: any) => {
       p5.frameRate(1);
       const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
       const displayHeight = document.getElementById(divId)?.offsetHeight || 1;

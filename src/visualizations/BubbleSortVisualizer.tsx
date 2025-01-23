@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Visualizer from "../components/Visualizer";
 import Sketch from "react-p5";
 
@@ -9,7 +10,7 @@ function BubbleSortVisualizer() {
     let j = 0;
     let sorted = false;
 
-    const setup = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts"), canvasParentRef: Element) => {
+    const setup = (p5: any, canvasParentRef: Element) => {
 
       const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
       const displayHeight = document.getElementById(divId)?.offsetHeight || 1;
@@ -19,7 +20,7 @@ function BubbleSortVisualizer() {
 
 
     //FIXME: Use a set of sketches instead, to get around memory complexity problem I can save only the unsorted state of the array, instead of the whole array. (check if that reduces memory complexity to 2n instead of n^2)
-    const draw = (p5: import("/Users/liam/Programming/Projects/visualizer/visualizer/node_modules/react-p5/node_modules/@types/p5/index.d.ts")) => {
+    const draw = (p5: any) => {
       p5.frameRate(5);
       const displayWidth = document.getElementById(divId)?.offsetWidth || 1;
       const displayHeight = document.getElementById(divId)?.offsetHeight || 1;
