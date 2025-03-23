@@ -1,7 +1,6 @@
 # Sorting Visualizer Web App
-
 ## Demo
-
+https://github.com/user-attachments/assets/0c04b61d-d1cf-4b69-b0c7-b2f53a1a9a5d
 ## Why?
   - I wanted to create a study tool for computer science students taking their data structure and algorithms courses.
   - I also wanted to gain more experience with some pretty common web development tools. 
