@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflow Reimagined</title>
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.10/dist/htmx.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#f5f7fa] to-[#e9ecef] text-gray-800 font-['Inter']">
+  <div class="container max-w-6xl mx-auto px-4 py-16">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <div
+          class="bg-white p-8 rounded-2xl shadow-xl ring-1 ring-gray-100 transition-all duration-300 hover:shadow-2xl">
+          <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">
+            Join the Future
+          </h2>
+
+          <div
+            class="bg-white p-8 rounded-3xl shadow-2xl ring-1 ring-gray-200 transition-all duration-300 hover:shadow-xl">
+            <button hx-post="/test_counter" hx-trigger="click" hx-target="#counter">Click me!</button>
+
+            <text id="counter" class="text-center m-8"></text>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

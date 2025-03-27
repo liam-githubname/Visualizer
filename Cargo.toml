@@ -1,0 +1,37 @@
+[package]
+name = "visualizer"  # The name of your project
+version = "0.1.0"           # Version of your project
+edition = "2024"            # Rust edition (determines language features)
+
+[dependencies]
+# Web framework
+axum = "0.7.3"              # Web framework for building APIs and web services
+tower = "0.5.2"
+tower-http = { version = "0.6.2", features = ["fs"] }
+
+# Async runtime
+tokio = { version = "1.35.1", features = ["full"] }
+# Tokio is an asynchronous runtime for Rust
+# "full" feature enables all async capabilities like networking, timers, etc.
+
+# Logging
+tracing = "0.1.40"          # Structured logging framework
+# tracing-subscriber = "0.3.18" # Helps configure and collect logs
+
+# Serialization
+serde = { version = "1.0.196", features = ["derive"] }
+# Serde is a framework for serializing and deserializing Rust data structures
+# "derive" feature allows automatic generation of serialization code
+
+# serde_json = "1.0.113"      # JSON serialization/deserialization
+
+# Email validation
+# validator = { version = "0.16.1", features = ["derive"] }
+# Provides validation traits and derive macros for validating data
+
+# Environment variables
+# dotenv = "0.15.0"           # Loads environment variables from .env file
+
+# HTML templating
+askama = "0.12.1"           # Type-safe templating engine for Rust
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
